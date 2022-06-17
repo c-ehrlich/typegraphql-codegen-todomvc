@@ -9,7 +9,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(process.env.NEXT_PUBLIC_ENDPOINT as string, {
     method: "POST",
-    ...({"credentials":"include","headers":{"Content-Type":"application/json;charset=UTF-8"}}),
+    ...({"headers":{"Content-Type":"application/json;charset=UTF-8"}}),
       body: JSON.stringify({ query, variables }),
     });
 
@@ -37,15 +37,25 @@ export type CreateTodoInput = {
   body: Scalars['String'];
 };
 
+export type DeleteTodoInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addTodo: Todo;
+  deleteTodo: Todo;
   updateTodo: Todo;
 };
 
 
 export type MutationAddTodoArgs = {
   input: CreateTodoInput;
+};
+
+
+export type MutationDeleteTodoArgs = {
+  input: DeleteTodoInput;
 };
 
 
@@ -104,6 +114,13 @@ export type GetTodoQueryVariables = Exact<{
 
 
 export type GetTodoQuery = { __typename?: 'Query', todo: { __typename?: 'Todo', id: string, body: string, completed: boolean, updatedAt: string } };
+
+export type DeleteTodoMutationVariables = Exact<{
+  input: DeleteTodoInput;
+}>;
+
+
+export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: { __typename?: 'Todo', id: string, body: string, completed: boolean, updatedAt: string } };
 
 
 export const CreateTodoDocument = `
@@ -186,5 +203,24 @@ export const useGetTodoQuery = <
     useQuery<GetTodoQuery, TError, TData>(
       ['GetTodo', variables],
       fetcher<GetTodoQuery, GetTodoQueryVariables>(GetTodoDocument, variables),
+      options
+    );
+export const DeleteTodoDocument = `
+    mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(input: $input) {
+    id
+    body
+    completed
+    updatedAt
+  }
+}
+    `;
+export const useDeleteTodoMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteTodoMutation, TError, DeleteTodoMutationVariables, TContext>) =>
+    useMutation<DeleteTodoMutation, TError, DeleteTodoMutationVariables, TContext>(
+      ['DeleteTodo'],
+      (variables?: DeleteTodoMutationVariables) => fetcher<DeleteTodoMutation, DeleteTodoMutationVariables>(DeleteTodoDocument, variables)(),
       options
     );

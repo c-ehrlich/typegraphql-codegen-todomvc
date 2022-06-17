@@ -33,3 +33,12 @@ query GetTodo($id: String!) {
     updatedAt
   }
 }
+
+mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(input: $input) {
+    id
+    body
+    completed
+    updatedAt
+  }
+}
