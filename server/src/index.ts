@@ -1,5 +1,8 @@
-import "reflect-metadata"
+import 'reflect-metadata';
+import createApolloServer from './util/createServer';
 
-import createServer from "./util/createServer"
+async function main() {
+  await createApolloServer();
+}
 
-const app = createServer();
+main();
