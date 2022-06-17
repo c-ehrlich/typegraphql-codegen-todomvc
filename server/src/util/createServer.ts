@@ -4,8 +4,6 @@ import TodoResolver from '../module/todo/todo.resolver';
 import http from 'http';
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { execute, GraphQLSchema, subscribe } from 'graphql';
 
 async function createApolloServer() {
   const app = express();
