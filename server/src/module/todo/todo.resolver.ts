@@ -1,7 +1,8 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { CreateTodoInput, Todo, UpdateTodoInput } from './todo.dto';
+import { CreateTodoInput, DeleteTodoInput, Todo, UpdateTodoInput } from './todo.dto';
 import {
   createTodo,
+  deleteTodoService,
   getAllTodos,
   getTodoByID,
   updateTodoService,
@@ -30,6 +31,12 @@ class TodoResolver {
   @Mutation((returns) => Todo)
   async updateTodo(@Arg('input') input: UpdateTodoInput) {
     const todo = await updateTodoService(input);
+    return todo;
+  }
+
+  @Mutation((returns) => Todo)
+  async deleteTodo(@Arg('input') input: DeleteTodoInput) {
+    const todo = await deleteTodoService(input.id);
     return todo;
   }
 }

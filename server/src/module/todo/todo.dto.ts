@@ -21,6 +21,12 @@ export class UpdateTodoInput {
   completed: boolean;
 }
 
+@InputType()
+export class DeleteTodoInput {
+  @Field(() => ID, { nullable: true })
+  id: string
+}
+
 @ObjectType()
 export class Todo {
   @Field(() => ID, { nullable: false })

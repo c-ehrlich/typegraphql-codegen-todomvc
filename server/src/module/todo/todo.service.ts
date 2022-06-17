@@ -6,7 +6,11 @@ export function createTodo(data: CreateTodoInput) {
 }
 
 export function getAllTodos() {
-  return prisma.todo.findMany();
+  return prisma.todo.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
 }
 
 export function getTodoByID(id: string) {
@@ -18,6 +22,12 @@ export function getTodoByID(id: string) {
 export function updateTodoService({ id, ...data }: UpdateTodoInput) {
   return prisma.todo.update({
     where: { id },
-    data
+    data,
+  });
+}
+
+export function deleteTodoService(id: string) {
+  return prisma.todo.delete({
+    where: { id },
   });
 }
