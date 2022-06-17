@@ -1,0 +1,35 @@
+mutation CreateTodo($input: CreateTodoInput!) {
+  addTodo(input: $input) {
+    id
+    body
+    completed
+    updatedAt
+  }
+}
+
+mutation UpdateTodo($input: UpdateTodoInput!) {
+  updateTodo(input: $input) {
+    id
+    body
+    completed
+    updatedAt
+  }
+}
+
+query GetAllTodos {
+  todos {
+    id
+    body
+    completed
+    updatedAt
+  }
+}
+
+query GetTodo($id: String!) {
+  todo(id: $id) {
+    id
+    body
+    completed
+    updatedAt
+  }
+}
